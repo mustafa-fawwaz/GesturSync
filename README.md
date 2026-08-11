@@ -4,14 +4,14 @@
 
 GesturSync bridges the gap between human spatial intent and machine execution using Google's MediaPipe for 3D hand landmark extraction and a Linear Support Vector Machine (SVM) for gesture classification. The system runs on standard consumer hardware—no depth sensors or GPU required—achieving **98.8% classification accuracy** with **45–55 FPS** real-time performance on CPU.
 
-> Based on the research paper: *GesturSync: A Multimodal HCI System Design and Usability Evaluation Using MediaPipe and SVM*
+> Based on the research paper: _GesturSync: A Multimodal HCI System Design and Usability Evaluation Using MediaPipe and SVM_
 
 ## Authors
 
-| Name | ID | Email |
-|------|----|-------|
-| Abdul Rafay Javed | BSSE23 | bsse23022@itu.edu.pk |
-| Mustafa Fawwaz | BSSE23 | bsse23036@itu.edu.pk |
+| Name                | ID     | Email                |
+| ------------------- | ------ | -------------------- |
+| Abdul Rafay Javed   | BSSE23 | bsse23022@itu.edu.pk |
+| Mustafa Fawwaz      | BSSE23 | bsse23036@itu.edu.pk |
 | Hafiz M. Saad Irfan | BSSE23 | bsse23082@itu.edu.pk |
 
 **Institution:** Information Technology University, Lahore, Pakistan
@@ -29,13 +29,13 @@ GesturSync bridges the gap between human spatial intent and machine execution us
 
 ### Supported Actions
 
-| Gesture / Heuristic | System Action |
-|---------------------|---------------|
-| Swipe Left | Previous slide (`←`) |
-| Swipe Right | Next slide (`→`) |
-| Thumb → Pinky (close) | Mute volume |
-| Thumb → Index (close) | Volume down |
-| Thumb → Index (far) | Volume up |
+| Gesture / Heuristic   | System Action        |
+| --------------------- | -------------------- |
+| Swipe Left            | Previous slide (`←`) |
+| Swipe Right           | Next slide (`→`)     |
+| Thumb → Pinky (close) | Mute volume          |
+| Thumb → Index (close) | Volume down          |
+| Thumb → Index (far)   | Volume up            |
 
 ---
 
@@ -58,15 +58,15 @@ Video Ingestion → Feature Extraction → Classification → Heuristic Logic �
 
 ## Tech Stack
 
-| Component | Library |
-|-----------|---------|
-| Video capture | OpenCV |
-| Hand tracking | MediaPipe Hands |
-| Classification | scikit-learn (Linear SVM) |
-| System control | PyAutoGUI |
-| Data handling | pandas, NumPy |
-| Model persistence | joblib |
-| Visualization | matplotlib |
+| Component         | Library                   |
+| ----------------- | ------------------------- |
+| Video capture     | OpenCV                    |
+| Hand tracking     | MediaPipe Hands           |
+| Classification    | scikit-learn (Linear SVM) |
+| System control    | PyAutoGUI                 |
+| Data handling     | pandas, NumPy             |
+| Model persistence | joblib                    |
+| Visualization     | matplotlib                |
 
 ---
 
@@ -114,12 +114,12 @@ uv run python data_collector.py
 
 Hold your hand in each gesture and press the corresponding number key to record samples:
 
-| Key | Gesture |
-|-----|---------|
-| `0` | Swipe Left |
-| `1` | Swipe Right |
-| `2` | Pinch Open |
-| `3` | Pinch Close |
+| Key | Gesture      |
+| --- | ------------ |
+| `0` | Swipe Left   |
+| `1` | Swipe Right  |
+| `2` | Pinch Open   |
+| `3` | Pinch Close  |
 | `4` | Neutral Rest |
 
 Samples are saved to `hand_gestures.csv`. The paper uses **1,500 samples** (300 per class) with varied hand depth, wrist tilt, and spatial position.
@@ -133,6 +133,7 @@ uv run python train_svm.py
 ```
 
 This script:
+
 - Loads `hand_gestures.csv`
 - Performs an **80/20 train-test split** (random state 42)
 - Trains a Linear SVM (`kernel='linear'`, `C=1.0`)
@@ -176,11 +177,11 @@ GesturSync_new/
 
 Evaluated on a held-out 20% test set (300 samples from 1,500 total):
 
-| Metric | Score |
-|--------|-------|
-| **Accuracy** | 98.80% |
+| Metric        | Score  |
+| ------------- | ------ |
+| **Accuracy**  | 98.80% |
 | **Precision** | 98.86% |
-| **Recall** | 98.80% |
+| **Recall**    | 98.80% |
 
 The Swipe Right and Pinch configurations achieved perfect precision (1.00). Minor confusion between Swipe Left and Neutral was observed due to overlapping transitional wrist angles.
 
@@ -201,12 +202,12 @@ Five participants (ages 20–25) completed two tasks after a one-minute tutorial
 1. **Discrete control** — Navigate a 10-slide PDF using swipe gestures
 2. **Continuous control** — Adjust system volume to zero and back to maximum using pinch distance
 
-| Evaluation Criteria | Avg Rating (out of 5) |
-|---------------------|-----------------------|
-| Intuitiveness of Swiping | 4.8 |
-| Responsiveness (Latency Perception) | 4.7 |
-| Physical Fatigue after 5 minutes | 3.4 |
-| Overall System Reliability | 4.5 |
+| Evaluation Criteria                 | Avg Rating (out of 5) |
+| ----------------------------------- | --------------------- |
+| Intuitiveness of Swiping            | 4.8                   |
+| Responsiveness (Latency Perception) | 4.7                   |
+| Physical Fatigue after 5 minutes    | 3.4                   |
+| Overall System Reliability          | 4.5                   |
 
 ---
 
@@ -228,12 +229,12 @@ Five participants (ages 20–25) completed two tasks after a one-minute tutorial
 
 ## Comparison with Related Approaches
 
-| Approach | Method | Accuracy | Limitation |
-|----------|--------|----------|------------|
-| Oudah et al. (2020) | CNN on raw RGB | 92.4% | Requires GPU for real-time |
-| Kumar et al. (2021) | Kinect + SVM | 96.1% | Expensive depth hardware |
-| Zhang et al. (2022) | MediaPipe + DTW | 91.5% | High temporal matching latency |
-| **GesturSync** | **MediaPipe + Linear SVM** | **98.8%** | **Lightweight, CPU-only, low latency** |
+| Approach            | Method                     | Accuracy  | Limitation                             |
+| ------------------- | -------------------------- | --------- | -------------------------------------- |
+| Oudah et al. (2020) | CNN on raw RGB             | 92.4%     | Requires GPU for real-time             |
+| Kumar et al. (2021) | Kinect + SVM               | 96.1%     | Expensive depth hardware               |
+| Zhang et al. (2022) | MediaPipe + DTW            | 91.5%     | High temporal matching latency         |
+| **GesturSync**      | **MediaPipe + Linear SVM** | **98.8%** | **Lightweight, CPU-only, low latency** |
 
 ---
 
